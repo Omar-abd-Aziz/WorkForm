@@ -69,7 +69,10 @@ function swool(){
     }).then((result) => {    
         if (result.isConfirmed) {
             SendData();
-            Swal.fire('تم الارسال سنقوم بالتواصل معك ', '', 'success');
+            Swal.fire('تم الارسال سنقوم بالتواصل معك ', '', 'success').then((e)=>{
+                window.open('', '_self', '');
+                window.close();
+            });
         };
     });
 
@@ -98,4 +101,7 @@ function SendData(){
 
 
 };
+
+
+
 
