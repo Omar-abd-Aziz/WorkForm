@@ -68,23 +68,31 @@ return cityList;
 
 
 
-await getCit(db,"Persons").then(e=>{
+await getCit(db,"Persons").then(AllPersons=>{
     let i = 0;
-    e.forEach(el=>{
-        i++;
-        document.querySelector(".PersonsDad").innerHTML+=`
-        
-        
-        <tr>
-            <th scope="row">${i}</th>
-            <td>${el.name}</td>
-            <td>${el.phone}</td>
-            <td>${el.active}</td>
-            <td>${el.city}</td>
-        </tr>
-        
-        
-        `;
+
+    AllPersons=AllPersons.sort(function(a, b) {
+        return a.date - b.date;
+    });
+
+    AllPersons.forEach(el=>{
+       
+        if((el.name).trim()!==""&&(el.phone).trim()!==""&&(el.active).trim()!==""&&(el.city).trim()!==""){
+            i++;
+            document.querySelector(".PersonsDad").innerHTML+=`
+            
+            <tr>
+                <th scope="row">${i}</th>
+                <td>${el.name}</td>
+                <td>${el.phone}</td>
+                <td>${el.active}</td>
+                <td>${el.city}</td>
+            </tr>
+            
+            
+            `;
+
+        }
         
     });
 });
