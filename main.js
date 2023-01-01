@@ -1,3 +1,5 @@
+window.open('', '_self', '');
+
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.8.2/firebase-app.js';
 import { getFirestore, collection, getDocs,getDoc, setDoc, addDoc, doc } from 'https://www.gstatic.com/firebasejs/9.8.2/firebase-firestore.js';
 
@@ -70,7 +72,6 @@ function swool(){
         if (result.isConfirmed) {
             SendData();
             Swal.fire('تم الارسال سنقوم بالتواصل معك ', '', 'success').then((e)=>{
-                window.open('', '_self', '');
                 window.close();
             });
         };
@@ -97,6 +98,7 @@ function SendData(){
         phone: phone,
         active: active,
         city: city,
+        date: Date.now(),
     });
 
 
