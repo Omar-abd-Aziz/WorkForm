@@ -70,10 +70,30 @@ function swool(){
         confirmButtonText: 'ارسال',
     }).then((result) => {    
         if (result.isConfirmed) {
-            SendData();
-            Swal.fire('تم الارسال سنقوم بالتواصل معك ', '', 'success').then((e)=>{
-                window.close();
-            });
+
+            let name=document.querySelector("#name").value;
+            let phone=document.querySelector("#phone").value;
+            let active=document.querySelector("#active").value;
+            let city=document.querySelector("#city").value;
+
+            if((name).trim()!==""&&(phone).trim()!==""&&(active).trim()!==""&&(city).trim()!==""){
+                SendData(name,phone,active,city);
+                Swal.fire('تم الارسال سنقوم بالتواصل معك ', '', 'success').then((e)=>{
+                    window.close();
+                });
+            }else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'برجاء كتابة البيانات بشكل صحيح',
+                }).then((x)=>{
+                    swool();
+                });
+            }
+
+
+            
+            
         };
     });
 
@@ -87,11 +107,7 @@ document.querySelector("#simpleBtn").addEventListener("click",()=>{
 
 
 
-function SendData(){
-    let name=document.querySelector("#name").value;
-    let phone=document.querySelector("#phone").value;
-    let active=document.querySelector("#active").value;
-    let city=document.querySelector("#city").value;
+function SendData(name,phone,active,city){
 
     addDoc(collection(db,"Persons"),{
         name: name,
