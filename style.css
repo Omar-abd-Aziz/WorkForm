@@ -1,0 +1,21 @@
+
+.mainForm{
+    display: grid;
+}
+
+label{
+    text-align: end;
+    font-weight: bold;
+    font-size: 25px;
+    margin: 10px;
+}
+
+
+input{
+    width: 98%;
+    margin: auto;
+    padding: 5px;
+    font-size: 25px;
+    font-weight: bold;
+    border-radius: 6px;
+}
