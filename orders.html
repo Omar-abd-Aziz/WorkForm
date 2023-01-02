@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+    <link rel="stylesheet" href="./css/framework.css" />
+    <link rel="stylesheet" href="./css/master.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="page d-flex">
+      
+      <div class="content w-full">
+        <!-- Start Head -->
+        <div class="head bg-white p-15 between-flex">
+          <div class="search p-relative">
+            <input class="p-10" type="search" placeholder="Type A Keyword" />
+          </div>
+          <div class="icons d-flex align-center">
+            <!-- <span class="notification p-relative">
+              <i class="fa-regular fa-bell fa-lg"></i>
+            </span> -->
+            <img src="./imgs/img-person.png" alt="" />
+          </div>
+        </div>
+        <!-- End Head -->
+        <h1 class="p-relative" style="text-align: center;">الطلبات</h1>
+        <div class="friends-page d-grid m-20 gap-20" id="AllOrders">
+
+          
+          
+        </div>
+      </div>
+      <div class="sidebar bg-white p-20 p-relative">
+        <h3 class="p-relative txt-c mt-0">لوحة التحكم</h3>
+        <ul>
+          
+          <li>
+            <a class="active d-flex align-center fs-14 c-black rad-6 p-10" style="display: flex; justify-content: end;" href="orders.html">
+              <span style="font-weight: bold; font-size:20px;">الطلبات</span>
+              <i class="fa-regular fa-circle-user fa-fw" style="font-weight: bold; font-size:20px; margin-left: 10px;"></i>
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </body>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-database.js"></script>
+
+  <script type="module">
+
+
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.8.2/firebase-app.js';
+  import { getFirestore, collection, getDocs,getDoc, setDoc, addDoc, doc } from 'https://www.gstatic.com/firebasejs/9.8.2/firebase-firestore.js';
+
+  // TODO: Replace the following with your app's Firebase project configuration
+  const firebaseConfig = {
+      apiKey: "AIzaSyAYwT_AKDrFzjZurqiHh4aTwvSNzn1uPT0",
+      authDomain: "workform-95a5d.firebaseapp.com",
+      projectId: "workform-95a5d",
+      storageBucket: "workform-95a5d.appspot.com",
+      messagingSenderId: "947978405979",
+      appId: "1:947978405979:web:3abb1089942aa62587177e",
+      measurementId: "G-KWLW01R1S1"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  let X;
+
+  async function getCit(db,X) {
+  const citiesCol = collection(db,`${X}`);
+  const citySnapshot = await getDocs(citiesCol);
+  const cityList = citySnapshot.docs.map(doc => doc.data());
+  return cityList;
+  };
+
+
+  //////////////////////////////////////////////////////////////////////////
+
+
+
+  await getCit(db,"Persons").then(AllPersons=>{
+      let i = 0;
+
+      AllPersons=AllPersons.sort(function(a, b) {
+          return a.date - b.date;
+      });
+
+      document.querySelector("#AllOrders").innerHTML="";
+
+      AllPersons.forEach(el=>{
+        
+          if((el.name).trim()!==""&&(el.phone).trim()!==""&&(el.active).trim()!==""&&(el.city).trim()!==""){
+
+            document.querySelector("#AllOrders").innerHTML+=`
+            
+            <div class="friend bg-white rad-6 p-20 p-relative" style="font-size: 25px; font-weight: 600;">
+              <!-- <div class="contact">
+                <i class="fa-solid fa-phone"></i>
+                <i class="fa-regular fa-envelope"></i>
+              </div> -->
+              
+              <div class="txt-c">
+                <img class="rad-half mt-10 mb-10 w-100 h-100" src="imgs/img-person.png" alt="" />
+                <h4 class="m-0"> ${el.name} </h4>
+                <p class="c-grey fs-13 mt-5 mb-0" style="font-size: 19px; font-weight: 600;">${el.active}</p>
+              </div>
+              <div class="icons fs-14 p-relative">
+                <div class="mb-10" style="font-size: 19px; font-weight: 600;">
+                  <i class="fa-solid fa-phone fa-fw" style="color: green;"></i>
+                  <span>${el.phone}</span>
+                </div>
+
+                <div class="mb-10" style="font-size: 19px; font-weight: 600;">
+                  <i class="fa-solid fa-city fa-fw" style="color: blue;"></i>
+                  <span>${el.city}</span>
+                </div>
+
+
+                
+              </div>
+            </div>
+            
+            `;
+
+          }
+          
+      });
+  });
+
+
+
+
+  </script>
+</html>
