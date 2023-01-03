@@ -11,6 +11,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500&display=swap" rel="stylesheet" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment-precise-range-plugin@1.3.0/moment-precise-range.js"></script>
+
   </head>
   <body>
     <div class="page d-flex">
@@ -90,6 +94,77 @@
   //////////////////////////////////////////////////////////////////////////
 
 
+  
+/* 2 start function to get differnce between data now */
+function getDiffDate(oldDate){
+        
+    var starts = moment(`${oldDate}`);
+    var ends   = moment();
+
+    var duration = moment.duration(ends.diff(starts));
+
+    // with ###moment precise date range plugin###
+    // it will tell you the difference in human terms
+
+    var diff = moment.preciseDiff(starts, ends, true); 
+    // example: { "years": 2, "months": 7, "days": 0, "hours": 6, "minutes": 29, "seconds": 17, "firstDateWasLater":  false }
+
+
+    // or as string:
+    var diffHuman = moment.preciseDiff(starts, ends);
+    // example: 2 years 7 months 6 hours 29 minutes 17 seconds
+
+    let diffDate=diff;
+
+    if(diffDate.years!==0){
+        diffDate={
+            "diffDateNum": diffDate.years,
+            "diffDateName": "سنة",
+        };
+    } else if(diff.months!==0){
+        diffDate={
+            "diffDateNum": diffDate.months,
+            "diffDateName": "شهر",
+        };
+    } else if(diff.days!==0){
+        diffDate={
+            "diffDateNum": diffDate.days,
+            "diffDateName": "يوم",
+        };
+    } else if(diff.hours!==0){
+        diffDate={
+            "diffDateNum": diffDate.hours,
+            "diffDateName": "ساعة",
+        };
+    } else if(diff.minutes!==0){
+        diffDate={
+            "diffDateNum": diffDate.minutes,
+            "diffDateName": "دقيقة",
+        };
+    } else {
+        diffDate={
+            "diffDateNum": 0,
+            "diffDateName": "الان",
+        };
+    }
+
+    let stringDiffDate = `منذ ${diffDate.diffDateNum + " " + diffDate.diffDateName}`;
+    // منذ 1 سنة
+
+    if(diffDate.diffDateName=="الان"){
+      stringDiffDate="الان";
+    }
+    
+    // diffDate => json like {diffDateNum: 1, diffDateName: 'سنة'}
+
+    return stringDiffDate;
+}
+
+// console.log(getDiffDate("2022/1/1 => 5:55 PM"));
+/* 2 end function to get differnce between data now */
+
+
+
 
   await getCit(db,"Persons").then(AllPersons=>{
       let i = 0;
@@ -97,6 +172,8 @@
       AllPersons=AllPersons.sort(function(a, b) {
           return a.date - b.date;
       });
+
+      AllPersons.reverse();
 
       document.querySelector("#AllOrders").innerHTML="";
 
@@ -127,10 +204,17 @@
                   <i class="fa-solid fa-city fa-fw" style="color: blue;"></i>
                   <span>${el.city}</span>
                 </div>
-
-
-                
               </div>
+
+              <div class="info between-flex fs-13">
+                <span class="c-grey" style="font-size: 17px; font-weight: 600;">${getDiffDate(el.orderDate)}</span>
+                <div style="font-size: 17px; font-weight: 600;">
+                  <a class="btn-shape" href="#" style="background-color: #6c757d!important; color: white;">ارشفة</a>
+                  <a class="bg-blue c-white btn-shape" href="#" style="background-color: green !important; color: white;">قبول</a>
+                </div>
+              </div>
+
+
             </div>
             
             `;
