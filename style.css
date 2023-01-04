@@ -19,3 +19,14 @@ input{
     font-weight: bold;
     border-radius: 6px;
 }
+
+
+
+
+/*start my edit*/
+
+#phone::placeholder{
+    color: rgb(208, 206, 206)!important;
+}
+  
+/*end my edit*/

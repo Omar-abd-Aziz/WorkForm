@@ -55,7 +55,7 @@ function swool(){
             <input type="text" dir="auto" autocomplete="off" id="name">
     
             <label for="phone">:رقم الجوال</label>
-            <input type="number" dir="auto" autocomplete="off" id="phone">
+            <input type="number" placeholder="" dir="auto" autocomplete="off" id="phone">
     
             <label for="active">:النشاط</label>
             <input type="text" dir="auto" autocomplete="off" id="active">
@@ -108,7 +108,12 @@ document.querySelector("#simpleBtn").addEventListener("click",()=>{
 
 
 
-function SendData(name,phone,active,city){
+async function SendData(name,phone,active,city){
+
+    let country_calling_code;
+    await fetch("https://ipapi.co/json/").then(e=>e.json()).then(data=>{
+        country_calling_code=data.country_calling_code;
+    });
 
     addDoc(collection(db,"Persons"),{
         name: name,
@@ -117,6 +122,7 @@ function SendData(name,phone,active,city){
         city: city,
         date: Date.now(),
         orderDate: showDate(),
+        country_calling_code: country_calling_code,
     });
 
 
@@ -145,14 +151,16 @@ function showDate(){
     
     let dateNow;
 
-    if (hour>12){
+    console.log(hour)
+
+    if (hour>=12){
       
       dateNow= `
         ${year}/${month+1}/${day}
         => ${hour-12}:${mint} PM
         `;
 
-    } else if (hour<=12){
+    } else if (hour<=11){
       
         dateNow = `
         
@@ -244,13 +252,12 @@ function getDiffDate(oldDate){
 function getPersonCity(){
 
     fetch("https://ipapi.co/json/").then(e=>e.json()).then(data=>{
-        console.log(data.city);
         translateText(data.city);
     });
     
     
     async function translateText(text){
-        let res;
+
         let apiUrl = `https://api.mymemory.translated.net/get?q=${text}&langpair=English|Arabic`;
         await fetch(apiUrl).then(res => res.json()).then(data => {
             let x = data.responseData.translatedText;

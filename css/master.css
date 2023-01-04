@@ -39,6 +39,12 @@ ul {
   background-color: #f1f5f9;
   min-height: 100vh;
 }
+
+
+
+
+
+
 /* Start Sidebar */
 .sidebar {
   width: 250px;
@@ -997,16 +1003,16 @@ ul {
   top: 10px;
 }
 .friends-page .contact i {
-  background-color: #eee;
-  padding: 10px;
+  background-color: green;
+  padding: 6px 7px;
   border-radius: 50%;
-  color: #666;
-  font-size: 13px;
+  color: white;
+  font-size: 22px;
   cursor: pointer;
   transition: 0.3s;
 }
 .friends-page .contact i:hover {
-  background-color: var(--blue-color);
+  background-color: var(--green-color);
   color: white;
 }
 .friends-page .friend .icons {
@@ -1169,3 +1175,15 @@ ul {
   }
 }
 /* End Animation */
+
+
+
+
+
+
+
+
+
+
+
+
