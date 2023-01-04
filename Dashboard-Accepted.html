@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+    <link rel="stylesheet" href="./css/framework.css" />
+    <link rel="stylesheet" href="./css/master.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500&display=swap" rel="stylesheet" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment-precise-range-plugin@1.3.0/moment-precise-range.js"></script>
+
+
+  </head>
+  <body>
+    <div class="page d-flex">
+      
+      <div class="content w-full">
+        <!-- Start Head -->
+        <div class="head bg-white p-15 between-flex">
+          <div class="search p-relative">
+            <input class="p-10" type="search" placeholder="Type A Keyword" />
+          </div>
+          <div class="icons d-flex align-center">
+            <!-- <span class="notification p-relative">
+              <i class="fa-regular fa-bell fa-lg"></i>
+            </span> -->
+            <img src="./imgs/img-person.png" alt="" />
+          </div>
+        </div>
+        <!-- End Head -->
+        <h1 class="p-relative" style="text-align: center;">المقبولين</h1>
+        <div class="friends-page d-grid m-20 gap-20" id="AllOrders">
+
+          <h1 style="color: gray;" dir="auto">لا يوجد طلبات حاليا</h1>
+          
+        </div>
+      </div>
+      <div class="sidebar bg-white p-20 p-relative">
+        <h3 class="p-relative txt-c mt-0">لوحة التحكم</h3>
+        <ul>
+          
+          <li>
+
+            <a class="active d-flex align-center fs-14 c-black rad-6 p-10" style="display: flex; justify-content: end;" href="Dashboard-Orders.html">
+              <span style="font-weight: bold; font-size:20px;">الطلبات</span>
+              <i class="fa-regular fa-circle-user fa-fw" style="font-weight: bold; font-size:20px; margin-left: 10px;"></i>
+            </a>
+
+            <a class="Orders-Accepted active d-flex align-center fs-14 c-black rad-6 p-10" style="display: flex; justify-content: end; cursor: pointer;" href="Dashboard-Accepted.html">
+              <span style="font-weight: bold; font-size:20px;">المقبولين</span>
+              <i class="fa-solid fa-check fa-fw" style="font-weight: bold; font-size:20px; margin-left: 10px; background: green; color: white; border-radius: 50%; padding: 3px 0px;"></i>
+            </a>
+
+            <a class="Orders-Accepted active d-flex align-center fs-14 c-black rad-6 p-10" style="display: flex; justify-content: end; cursor: pointer;" href="Dashboard-Archived.html">
+              <span style="font-weight: bold; font-size:20px;">الارشيف</span>
+              <i class="fa-solid fa-folder-open fa-fw" style="font-weight: bold; font-size:20px; margin-left: 10px; color: gray;"></i>
+            </a>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </body>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-database.js"></script>
+
+  <script type="module">
+
+
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.8.2/firebase-app.js';
+  import { getFirestore, collection, getDocs,getDoc, setDoc, addDoc, doc } from 'https://www.gstatic.com/firebasejs/9.8.2/firebase-firestore.js';
+
+  // TODO: Replace the following with your app's Firebase project configuration
+  const firebaseConfig = {
+      apiKey: "AIzaSyAYwT_AKDrFzjZurqiHh4aTwvSNzn1uPT0",
+      authDomain: "workform-95a5d.firebaseapp.com",
+      projectId: "workform-95a5d",
+      storageBucket: "workform-95a5d.appspot.com",
+      messagingSenderId: "947978405979",
+      appId: "1:947978405979:web:3abb1089942aa62587177e",
+      measurementId: "G-KWLW01R1S1"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  let X;
+
+  async function getCit(db,X) {
+  const citiesCol = collection(db,`${X}`);
+  const citySnapshot = await getDocs(citiesCol);
+  const cityList = citySnapshot.docs.map(doc => doc.data());
+  return cityList;
+  };
+
+
+  //////////////////////////////////////////////////////////////////////////
+
+
+  
+/* 2 start function to get differnce between data now */
+function getDiffDate(oldDate){
+        
+    var starts = moment(`${oldDate}`);
+    var ends   = moment();
+
+    var duration = moment.duration(ends.diff(starts));
+
+    // with ###moment precise date range plugin###
+    // it will tell you the difference in human terms
+
+    var diff = moment.preciseDiff(starts, ends, true); 
+    // example: { "years": 2, "months": 7, "days": 0, "hours": 6, "minutes": 29, "seconds": 17, "firstDateWasLater":  false }
+
+
+    // or as string:
+    var diffHuman = moment.preciseDiff(starts, ends);
+    // example: 2 years 7 months 6 hours 29 minutes 17 seconds
+
+    let diffDate=diff;
+
+    if(diffDate.years!==0){
+        diffDate={
+            "diffDateNum": diffDate.years,
+            "diffDateName": "سنة",
+        };
+    } else if(diff.months!==0){
+        diffDate={
+            "diffDateNum": diffDate.months,
+            "diffDateName": "شهر",
+        };
+    } else if(diff.days!==0){
+        diffDate={
+            "diffDateNum": diffDate.days,
+            "diffDateName": "يوم",
+        };
+    } else if(diff.hours!==0){
+        diffDate={
+            "diffDateNum": diffDate.hours,
+            "diffDateName": "ساعة",
+        };
+    } else if(diff.minutes!==0){
+        diffDate={
+            "diffDateNum": diffDate.minutes,
+            "diffDateName": "دقيقة",
+        };
+    } else {
+        diffDate={
+            "diffDateNum": 0,
+            "diffDateName": "الان",
+        };
+    }
+
+    let stringDiffDate = `منذ ${diffDate.diffDateNum + " " + diffDate.diffDateName}`;
+    // منذ 1 سنة
+
+    if(diffDate.diffDateName=="الان"){
+      stringDiffDate="الان";
+    }
+    
+    // diffDate => json like {diffDateNum: 1, diffDateName: 'سنة'}
+
+    return stringDiffDate;
+}
+
+// console.log(getDiffDate("2022/1/1 => 5:55 PM"));
+/* 2 end function to get differnce between data now */
+
+
+/* 3 start get all Orders */
+let AllPersonsData;
+await getCit(db,"Persons").then(AllPersons=>{
+      let i = 0;
+
+      AllPersons=AllPersons.sort(function(a, b) {
+          return a.date - b.date;
+      });
+
+      AllPersons.reverse();
+      AllPersonsData=AllPersons;
+
+
+      let AllPersonsAccepted=AllPersonsData.filter(e=>e.isAccepted==true);
+
+      if(AllPersonsAccepted.length!==0){
+        document.querySelector("#AllOrders").innerHTML="";
+      }
+
+      AllPersonsAccepted.forEach(el=>{
+        
+          if((el.name).trim()!==""&&(el.phone).trim()!==""&&(el.active).trim()!==""&&(el.city).trim()!==""){
+
+            document.querySelector("#AllOrders").innerHTML+=`
+            
+            <div class="friend bg-white rad-6 p-20 p-relative" style="font-size: 25px; font-weight: 600;">
+              <!-- <div class="contact">
+                <i class="fa-solid fa-phone"></i>
+                <i class="fa-regular fa-envelope"></i>
+              </div> -->
+              
+              <div class="contact">
+                <a href="https://api.whatsapp.com/send?phone=${el.country_calling_code+Number(el.phone)}" target="_blank">
+                  <i class="fab fa-whatsapp"></i>
+                </a>
+              </div>
+
+              <div class="txt-c">
+                <img class="rad-half mt-10 mb-10 w-100 h-100" src="imgs/img-person.png" alt="" />
+                <h4 class="m-0"> ${el.name} </h4>
+                <p class="c-grey fs-13 mt-5 mb-0" style="font-size: 19px; font-weight: 600;">${el.active}</p>
+              </div>
+              <div class="icons fs-14 p-relative">
+                <div class="mb-10" style="font-size: 19px; font-weight: 600;">
+                  <i class="fa-solid fa-phone fa-fw" style="color: green;"></i>
+                  <span>${el.phone}</span>
+                </div>
+
+                <div class="mb-10" style="font-size: 19px; font-weight: 600;">
+                  <i class="fa-solid fa-city fa-fw" style="color: blue;"></i>
+                  <span>${el.city}</span>
+                </div>
+              </div>
+
+              <div class="info between-flex fs-13">
+                <span class="c-grey" style="font-size: 17px; font-weight: 600;">${getDiffDate(el.orderDate)}</span>
+                <div style="font-size: 17px; font-weight: 600;">
+                  <a class="archiveOrder btn-shape" href="#" style="background-color: #6c757d!important; color: white;" data-id="${el.id}">ارشفة</a>
+                <!--  <a class="acceptOrder bg-blue c-white btn-shape" href="#" style="background-color: green !important; color: white;" data-id="${el.id}">قبول</a> -->
+                </div>
+              </div>
+
+
+            </div>
+            
+            `;
+
+          }
+          
+      });
+
+
+  });
+
+/* 3 End get all Orders */
+
+
+
+
+
+
+/* 4 Start set Orders Accepted and orders archived*/
+
+window.onclick=(e)=>{
+
+  /* start accept order */
+  if([...e.target.classList].includes("acceptOrder")){
+    let orderId=e.target.dataset.id;
+    let orderData=AllPersonsData.find(el=>el.id==`${orderId}`);
+
+    setDoc(doc(db,"Persons",orderId),{
+      ...orderData,
+      isAccepted: true,
+    });
+
+
+    e.target.parentNode.parentNode.parentNode.remove();
+    
+  };
+  /* end accept order */
+
+
+  /* start archive order */
+  if([...e.target.classList].includes("archiveOrder")){
+    let orderId=e.target.dataset.id;
+    let orderData=AllPersonsData.find(el=>el.id==`${orderId}`);
+
+    setDoc(doc(db,"Persons",orderId),{
+      ...orderData,
+      isAccepted: false,
+    });
+
+    e.target.parentNode.parentNode.parentNode.remove();
+
+  };
+  /* end archive order */
+
+  
+};
+
+/* 4 end set Orders Accepted and orders archived*/
+
+
+
+
+
+
+</script>
+
+</html>

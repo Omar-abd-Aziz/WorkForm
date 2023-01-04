@@ -125,8 +125,38 @@ async function SendData(name,phone,active,city){
         country_calling_code: country_calling_code,
     });
 
+    setIdForAllOrders();
+
 
 };
+
+
+
+
+
+
+/* start fuction to set id on all Orders */
+
+async function setIdForAllOrders(){
+
+    await getDocs(collection(db, "Persons")).then(snap=>{
+        snap.docs.forEach(el=>{
+            setDoc(doc(db, "Persons",el.id), {
+                ...el.data(),
+                id: el.id,
+            })
+        })
+    })
+
+};
+/* end fuction to set id on all Orders */
+
+
+
+
+
+
+
 
 
 
@@ -248,6 +278,7 @@ function getDiffDate(oldDate){
 /* 2 end function to get differnce between data now */
 
 
+/* 3 start get person ciy and code */
 
 function getPersonCity(){
 
@@ -272,5 +303,5 @@ getPersonCity();
 
 
 
-
+/* 3 end get person ciy and code */
 
