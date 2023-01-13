@@ -58,7 +58,48 @@ function swool(){
             <input type="number" placeholder="" dir="auto" autocomplete="off" id="phone">
     
             <label for="active">:النشاط</label>
-            <input type="text" dir="auto" autocomplete="off" id="active">
+            <select dir="auto" id="active" name="carlist" form="carform" style="font-weiht: bold; padding: 5px 5px; width: 98%; margin: auto 10px auto 0px; border: 2px solid black; border-radius: 6px;">
+                <option value=""></option>
+                <option value="تسويق الكتروني">
+              تسويق الكتروني
+              </option>
+              <option value="تصميم موقع الكترونية">
+              تصميم موقع الكترونية
+              </option>
+              <option value="تصميم متجر الكترونية">
+              تصميم متجر الكترونية
+              </option>
+              <option value="تصميم متجر علي منصة سلة">
+              تصميم متجر علي منصة سلة
+              </option>
+              <option value="تصميم متجر علي منصة زيد">
+              تصميم متجر علي منصة زيد
+              </option>
+              <option value="ربط خدامات">
+              ربط خدامات
+              </option>
+              <option value="نقاط بيع">
+              نقاط بيع
+              </option>
+              <option value="صيانة متجر سلة">
+              صيانة متجر سلة
+              </option>
+              <option value="تصميم منيو مطعم الكتروني">
+              تصميم منيو مطعم الكتروني
+              </option>
+              <option value="برامج محاسبية متاكملة">
+              برامج محاسبية متاكملة
+              </option>
+              <option value="برامج معامل تحاليل طبية">
+              برامج معامل تحاليل طبية
+              </option>
+              <option value="برامج مستوصفات طبية">
+              برامج مستوصفات طبية
+              </option>
+              <option value="audi">
+              شي اخر..
+              </option>
+            </select>
     
             <label for="city">:المدينة</label>
             <input type="text" dir="rtl" autocomplete="off" id="city" value="">
@@ -68,19 +109,43 @@ function swool(){
         
         `,
         confirmButtonText: 'ارسال',
-    }).then((result) => {    
+    }).then(async (result) => {    
         if (result.isConfirmed) {
+
+
+            
+            const inputOptions = new Promise(() => {
+                setTimeout(() => {
+
+                }, 4000)
+            })
+            
+            
+            
+  
 
             let name=document.querySelector("#name").value;
             let phone=document.querySelector("#phone").value;
             let active=document.querySelector("#active").value;
             let city=document.querySelector("#city").value;
 
+
+
+            
+
+
             if((name).trim()!==""&&(phone).trim()!==""&&(active).trim()!==""&&(city).trim()!==""){
+
                 SendData(name,phone,active,city);
-                Swal.fire('تم الارسال سنقوم بالتواصل معك ', '', 'success').then((e)=>{
-                    window.close();
-                });
+
+                await Swal.fire({
+                    title: '..برجاء الانتظار',
+                    input: 'radio',
+                    inputOptions: inputOptions,
+                })
+
+                
+                
             }else {
                 Swal.fire({
                     icon: 'error',
@@ -110,10 +175,25 @@ document.querySelector("#simpleBtn").addEventListener("click",()=>{
 
 async function SendData(name,phone,active,city){
 
+    
     let country_calling_code;
     await fetch("https://ipapi.co/json/").then(e=>e.json()).then(data=>{
         country_calling_code=data.country_calling_code;
     });
+
+
+    /* Start Send Whatsapp Massage */
+
+    let HelloMassage=`
+    مرحبا ${name} 
+    لقد قمت بطلب ${active}
+    وسوف نتواصل معك قريبآ    
+    `;
+    HelloMassage=HelloMassage.trim();
+    let whatappAPI=`https://karzoun.app/api/send.php?number=${country_calling_code.slice(1)+Number(`${phone}`)}&type=text&message=${encodeURIComponent(HelloMassage)}&instance_id=63C05BF69B191&access_token=1757991908`;
+    fetch(whatappAPI);
+
+    /* End Send Whatsapp Massage */
 
     addDoc(collection(db,"Persons"),{
         name: name,
@@ -123,7 +203,11 @@ async function SendData(name,phone,active,city){
         date: Date.now(),
         orderDate: showDate(),
         country_calling_code: country_calling_code,
-    });
+    }).then(e=>{
+        Swal.fire('تم الارسال سنقوم بالتواصل معك ', '', 'success').then((e)=>{
+            window.close();
+        });
+    })
 
     setIdForAllOrders();
 
@@ -181,7 +265,6 @@ function showDate(){
     
     let dateNow;
 
-    console.log(hour)
 
     if (hour>=12){
       
@@ -283,7 +366,8 @@ function getDiffDate(oldDate){
 function getPersonCity(){
 
     fetch("https://ipapi.co/json/").then(e=>e.json()).then(data=>{
-        translateText(data.city);
+        document.querySelector("#city").value=data.city;
+        // translateText(data.city);
     });
     
     

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard</title>
+    <title>Dashboard-Orders</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
     <link rel="stylesheet" href="./css/framework.css" />
     <link rel="stylesheet" href="./css/master.css" />
@@ -12,9 +12,150 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500&display=swap" rel="stylesheet" />
 
+
+    <link rel="icon" type="image/x-icon" href="./imgs/logo.png">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/moment-precise-range-plugin@1.3.0/moment-precise-range.js"></script>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
+
+
+    <style>
+
+
+      @font-face {
+        font-family: myFirstFont;
+        src: url(./Fonts/Ethnocentric.ttf);
+      }
+
+      
+      /* Table Styles */
+
+      .table-wrapper{
+          box-shadow: 0px 35px 50px rgba( 0, 0, 0, 0.2 );
+      }
+
+      .fl-table {
+          border-radius: 5px;
+          font-size: 17px;
+          font-weight: normal;
+          border: none;
+          border-collapse: collapse;
+          width: 100%;
+          max-width: 100%;
+          white-space: nowrap;
+          background-color: white;
+      }
+
+      .fl-table td{
+          text-align: center;
+          padding: 3px;
+          border: 2px solid #0a1951;
+      }
+
+
+      .fl-table th {
+          text-align: center;
+          padding: 8px;
+          border: 2px solid #0a1951;
+      }
+
+
+      .fl-table td {
+          border-right: 1px solid #f8f8f8;
+          font-size: 14px;
+          font-family: 'Cairo';
+      }
+
+
+      .fl-table thead th {
+          color: #ffffff;
+          background: #0a1951;
+      }
+
+      .fl-table tr {
+        border: 1px solid rgb(0, 0, 0);
+      }
+
+      /* Responsive */
+
+      @media (max-width: 767px) {
+          .fl-table {
+              display: block;
+              width: 100%;
+          }
+          .table-wrapper:before{
+              content: "Scroll horizontally >";
+              display: block;
+              text-align: right;
+              font-size: 11px;
+              color: white;
+              padding: 0 0 10px;
+          }
+          .fl-table thead, .fl-table tbody, .fl-table thead th {
+              display: block;
+          }
+          .fl-table thead th:last-child{
+              border-bottom: none;
+          }
+          .fl-table thead {
+              float: left;
+          }
+          .fl-table tbody {
+              width: auto;
+              position: relative;
+              overflow-x: auto;
+          }
+          .fl-table td, .fl-table th {
+              padding: 20px .625em .625em .625em;
+              height: 60px;
+              vertical-align: middle;
+              box-sizing: border-box;
+              overflow-x: hidden;
+              overflow-y: auto;
+              width: 120px;
+              font-size: 13px;
+              text-overflow: ellipsis;
+          }
+          .fl-table thead th {
+              text-align: left;
+              border-bottom: 1px solid #f7f7f9;
+          }
+          .fl-table tbody tr {
+              display: table-cell;
+          }
+          .fl-table tbody tr:nth-child(odd) {
+              background: none;
+          }
+          .fl-table tr:nth-child(even) {
+              background: transparent;
+          }
+          .fl-table tr td:nth-child(odd) {
+              background: #F8F8F8;
+              border-right: 1px solid #E6E4E4;
+          }
+          .fl-table tr td:nth-child(even) {
+              border-right: 1px solid #E6E4E4;
+          }
+          .fl-table tbody td {
+              display: block;
+              text-align: center;
+          }
+      }
+
+
+
+      .CompanyName::before{
+        content: "Digital vision for information technology";
+        position: relative;
+        bottom: -28px;
+        left: 300px;
+        font-family: myFirstFont;
+        color: #397eaf;
+        font-size: 13px;
+      }
+    </style>
 
   </head>
   <body>
@@ -23,21 +164,59 @@
       <div class="content w-full">
         <!-- Start Head -->
         <div class="head bg-white p-15 between-flex">
-          <div class="search p-relative">
-            <input class="p-10" type="search" placeholder="Type A Keyword" />
+          <div class="p-relative">
+            <h2>Hello <span id="AdminName" style="color: #0a1951;">Admin..</span></h2>
+            <!-- <input class="p-10" type="search" placeholder="Type A Keyword" /> -->
           </div>
           <div class="icons d-flex align-center">
             <!-- <span class="notification p-relative">
               <i class="fa-regular fa-bell fa-lg"></i>
             </span> -->
-            <img src="./imgs/img-person.png" alt="" />
+            <p class="CompanyName" style="font-weight: bold; font-size: 20px; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;"> الرؤيا الرقمية لتقنية المعلومات </p>
+            <img src="./imgs/logo.png" alt="" />
           </div>
         </div>
         <!-- End Head -->
         <h1 class="p-relative" style="text-align: center;">الطلبات</h1>
-        <div class="friends-page d-grid m-20 gap-20" id="AllOrders">
+        <div style="overflow: auto;">
 
-          <h1 style="color: gray;" dir="auto">لا يوجد طلبات حاليا</h1>
+          <div class="table-wrapper">
+            <table class="fl-table">
+                <thead>
+                <tr>
+                    <th>التعديل</th>
+                    <th>التايخ</th>
+                    <th>الحالة</th>
+                    <th>نهاية العقد</th>
+                    <th>صيغة العقد</th>
+                    <th>بداية العقد</th>
+                    <th>المبلغ</th>
+                    <th>النشاط</th>
+                    <th>المدينة</th>
+                    <th>رقم الجوال</th>
+                    <th>الاسم</th>
+                    <th>Id</th>
+                </tr>
+                </thead>
+
+                <tbody id="AllOrders">
+
+                <!-- <tr>
+                  <td class="Order-Id"></td>
+                  <td class="Order-Name"></td>
+                  <td class="Order-Phone"></td>
+                  <td class="Order-Active"></td>
+                  <td class="Order-Price"></td>
+                  <td class="Order-Start"></td>
+                  <td class="Order-Shape"></td>
+                  <td class="Order-End"></td>
+                  <td class="Order-Status"></td>
+                  <td class="Order-Editing"></td>
+                </tr> -->
+                
+                <tbody>
+            </table>
+        </div>
           
         </div>
       </div>
@@ -48,18 +227,24 @@
           <li>
 
             <a class="active d-flex align-center fs-14 c-black rad-6 p-10" style="display: flex; justify-content: end;" href="Dashboard-Orders.html">
+              <p style="position: absolute; left: 35px; font-weight: bold;" class="NumberOfOrders">0</p>
               <span style="font-weight: bold; font-size:20px;">الطلبات</span>
               <i class="fa-regular fa-circle-user fa-fw" style="font-weight: bold; font-size:20px; margin-left: 10px;"></i>
             </a>
 
             <a class="Orders-Accepted active d-flex align-center fs-14 c-black rad-6 p-10" style="display: flex; justify-content: end; cursor: pointer;" href="Dashboard-Accepted.html">
-              <span style="font-weight: bold; font-size:20px;">المقبولين</span>
-              <i class="fa-solid fa-check fa-fw" style="font-weight: bold; font-size:20px; margin-left: 10px; background: green; color: white; border-radius: 50%; padding: 3px 0px;"></i>
+              <span style="font-weight: bold; font-size:20px;">العملاء</span>
+              <i class="fa-regular fa-circle-user fa-fw" style="font-weight: bold; font-size:20px; margin-left: 10px; color: green; border-radius: 50%;"></i>
             </a>
 
             <a class="Orders-Accepted active d-flex align-center fs-14 c-black rad-6 p-10" style="display: flex; justify-content: end; cursor: pointer;" href="Dashboard-Archived.html">
               <span style="font-weight: bold; font-size:20px;">الارشيف</span>
               <i class="fa-solid fa-folder-open fa-fw" style="font-weight: bold; font-size:20px; margin-left: 10px; color: gray;"></i>
+            </a>
+
+            <a class="Orders-Accepted active d-flex align-center fs-14 c-black rad-6 p-10" style="display: flex; justify-content: end; cursor: pointer; background: rgba(137, 8, 8, 0.676); color: white;" id="logOut-digital">
+              <span style="font-weight: bold; font-size:20px;">تسجيل الخروج</span>
+              <i class="fas fa-sign-out-alt fa-fw" style="font-weight: bold; font-size:20px; margin-left: 10px; color: white;"></i>
             </a>
 
           </li>
@@ -77,7 +262,7 @@
 
 
   import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.8.2/firebase-app.js';
-  import { getFirestore, collection, getDocs,getDoc, setDoc, addDoc, doc } from 'https://www.gstatic.com/firebasejs/9.8.2/firebase-firestore.js';
+  import { getFirestore, collection, getDocs,getDoc, setDoc, addDoc, doc,deleteDoc, onSnapshot } from 'https://www.gstatic.com/firebasejs/9.8.2/firebase-firestore.js';
 
   // TODO: Replace the following with your app's Firebase project configuration
   const firebaseConfig = {
@@ -104,7 +289,119 @@
   };
 
 
-  //////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+/*start login cods*/
+
+
+
+/* 01 start fuction to set id on all Accounts */
+
+setIdForAllAccounts();
+async function setIdForAllAccounts(){
+    await getDocs(collection(db,"accounts")).then(snap=>{
+        snap.docs.forEach(el=>{
+            setDoc(doc(db,"accounts",el.id), {
+                ...el.data(),
+                id: el.id,
+            })
+        })
+    })
+};
+
+/* 01 end fuction to set id on all Accounts */
+
+
+
+/* 02 start get AllAccounts */
+
+let AllAccounts;
+
+await getCit(db, 'accounts').then(async (e) => {
+  AllAccounts = e;
+})
+
+async function getUserDataWithId(id){
+  return AllAccounts.find(e=>e.id==id);
+}
+
+/* 02 end get All Accounts */
+
+
+
+/* 04 start check and get user doc */
+
+let mainPersonData;
+let docId = await localStorage.getItem("doc-digital-id");
+
+if(docId!==null&&docId.trim()!==''){
+    // document.querySelector('.profile-btn').dataset.personid=docId;
+    mainPersonData=await getUserDataWithId(docId);
+    document.querySelector("#AdminName").textContent=`${mainPersonData.username}..`;
+} else {
+  location.href="./login/login.html"
+}
+
+/* 04 end check and get user doc */
+
+
+
+document.querySelector("#logOut-digital").addEventListener("click",()=>{
+
+  localStorage.setItem("doc-digital-id","");
+  location.href="./login/login.html";
+
+});
+
+
+/*end login cods*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 1 start fuction to set id on all Orders */
+async function setIdForAllOrders(){
+
+await getDocs(collection(db, "Persons")).then(snap=>{
+    snap.docs.forEach(el=>{
+        setDoc(doc(db, "Persons",el.id), {
+            ...el.data(),
+            id: el.id,
+        })
+    })
+})
+
+};
+/* 1 end fuction to set id on all Orders */
 
 
   
@@ -179,79 +476,86 @@ function getDiffDate(oldDate){
 
 /* 3 start get all Orders */
 let AllPersonsData;
-await getCit(db,"Persons").then(AllPersons=>{
-      let i = 0;
+getAllNewOrders();
+async function getAllNewOrders(){
 
-      AllPersons=AllPersons.sort(function(a, b) {
-          return a.date - b.date;
-      });
-
-      AllPersons.reverse();
-      AllPersonsData=AllPersons;
-
-      let AllPersonsNotShow=AllPersons.filter(el=>el.isAccepted==undefined);
-
-      if(AllPersonsNotShow.length!==0){
-        document.querySelector("#AllOrders").innerHTML="";
-      }
-
-
-      AllPersonsNotShow.forEach(el=>{
+  await getCit(db,"Persons").then(AllPersons=>{
+        let i = 0;
+  
+        AllPersons=AllPersons.sort(function(a, b) {
+            return a.date - b.date;
+        });
+  
+        AllPersons.reverse();
+        AllPersonsData=AllPersons;
+  
+        let AllPersonsNotShow=AllPersons.filter(el=>el.isAccepted!==true&&el.isAccepted!==false&&el.name!==undefined);
+  
+        document.querySelector(".NumberOfOrders").innerHTML=AllPersonsNotShow.length;
+  
         
-          if((el.name).trim()!==""&&(el.phone).trim()!==""&&(el.active).trim()!==""&&(el.city).trim()!==""){
-
-            document.querySelector("#AllOrders").innerHTML+=`
+        if(AllPersonsNotShow.length!==0){
+          document.querySelector("#AllOrders").innerHTML="";
+        }
+  
+  
+        AllPersonsNotShow.forEach(el=>{
             
-            <div class="friend bg-white rad-6 p-20 p-relative" style="font-size: 25px; font-weight: 600;">
-              <!-- <div class="contact">
-                <i class="fa-solid fa-phone"></i>
-                <i class="fa-regular fa-envelope"></i>
-              </div> -->
+            if((el.name).trim()!==""&&(el.phone).trim()!==""&&(el.active).trim()!==""&&(el.city).trim()!==""){
+              i++;
+              document.querySelector("#AllOrders").innerHTML+=`
+  
+  
+                  <tr data-id="${el.id}" style="font-weight: 600;">
+                    <td class="Order-Editing">
+                      
+  
+                      <a>
+                        <i class="fa-solid fa-trash removeOrder" data-id="${el.id}" style="font-size: 20px; color: white; background: darkred; border-radius: 50%; padding: 6px 8px; cursor: pointer;"></i>
+                      </a>
+  
+                      <a>
+                        <i class="fa-solid fa-folder-open archiveOrder" data-id="${el.id}" style="font-size: 20px; color: white; background: gray; border-radius: 50%; padding: 7px 5px 5px 6px; cursor: pointer;"></i>
+                      </a>
+  
+                      <a>
+                        <i class="fa-solid fa-check acceptOrder" data-id="${el.id}" style="font-size: 20px; color: white; background: green; border-radius: 50%; padding: 5px 5px; cursor: pointer;"></i>
+                      </a>
+  
+                      <a>
+                        <i class="fa-solid fa-pen-to-square editOrder" data-id="${el.id}" style="font-size: 20px; color: #e0dfdf; background: #233245; border-radius: 50%; padding: 5px 5px; cursor: pointer;"></i>
+                      </a>
+  
+                      <a href="http://wa.me/${el.country_calling_code+Number(el.phone)}" target="_blank">
+                        <i class="fa-brands fa-whatsapp" style="font-size: 20px; color: white; background: green; border-radius: 50%; padding: 4px 5px; cursor: pointer;"></i>
+                      </a>
+  
+                      
+                    </td>
+                    <td class="Order-Date">${getDiffDate(el.orderDate)}</td>
+                    <td class="Order-Status">${(moment.preciseDiff(moment(), moment(`${el.endTime}`),true).firstDateWasLater)?"منتهي":"نشط"}</td>
+                    <td class="Order-End">${(el.endTime==undefined)?0:el.endTime}</td>
+                    <td class="Order-Shape">${(el.shape==undefined)?moment.preciseDiff(moment(`${el.startTime}`), moment(`${el.endTime}`)):el.shape}</td>
+                    <td class="Order-Start">${(el.startTime==undefined)?0:el.startTime}</td>
+                    <td class="Order-Price">${(el.price==undefined)?0:el.price}</td>
+                    <td class="Order-Active">${el.active}</td>
+                    <td class="Order-City">${el.city}</td>
+                    <td class="Order-Phone">${el.phone}</td>
+                    <td class="Order-Name">${el.name}</td>
+                    <td class="Order-Id">#${i}</td>
+                  </tr>
               
-              <div class="contact">
-                <a href="https://api.whatsapp.com/send?phone=${el.country_calling_code+Number(el.phone)}" target="_blank">
-                  <i class="fab fa-whatsapp"></i>
-                </a>
-              </div>
-
-              <div class="txt-c">
-                <img class="rad-half mt-10 mb-10 w-100 h-100" src="imgs/img-person.png" alt="" />
-                <h4 class="m-0"> ${el.name} </h4>
-                <p class="c-grey fs-13 mt-5 mb-0" style="font-size: 19px; font-weight: 600;">${el.active}</p>
-              </div>
-              <div class="icons fs-14 p-relative">
-                <div class="mb-10" style="font-size: 19px; font-weight: 600;">
-                  <i class="fa-solid fa-phone fa-fw" style="color: green;"></i>
-                  <span>${el.phone}</span>
-                </div>
-
-                <div class="mb-10" style="font-size: 19px; font-weight: 600;">
-                  <i class="fa-solid fa-city fa-fw" style="color: blue;"></i>
-                  <span>${el.city}</span>
-                </div>
-              </div>
-
-              <div class="info between-flex fs-13">
-                <span class="c-grey" style="font-size: 17px; font-weight: 600;">${getDiffDate(el.orderDate)}</span>
-                <div style="font-size: 17px; font-weight: 600;">
-                  <a class="archiveOrder btn-shape" href="#" style="background-color: #6c757d!important; color: white;" data-id="${el.id}">ارشفة</a>
-                  <a class="acceptOrder bg-blue c-white btn-shape" href="#" style="background-color: green !important; color: white;" data-id="${el.id}">
-                    قبول
-                  </a>
-                </div>
-              </div>
-
-
-            </div>
+              
+              `;
+  
+            }
             
-            `;
-
-          }
-          
-      });
-
-
+        });
+  
+  
   });
+
+}
 
 /* 3 End get all Orders */
 
@@ -264,42 +568,307 @@ await getCit(db,"Persons").then(AllPersons=>{
 
 window.onclick=(e)=>{
 
+
+
 /* start accept order */
+
 if([...e.target.classList].includes("acceptOrder")){
-  let orderId=e.target.dataset.id;
-  let orderData=AllPersonsData.find(el=>el.id==`${orderId}`);
 
-  setDoc(doc(db,"Persons",orderId),{
-    ...orderData,
-    isAccepted: true,
-  });
+Swal.fire({
+title: 'Are you Want To Accept It?',
+text: "",
+icon: 'warning',
+showCancelButton: true,
+confirmButtonColor: '#3085d6',
+cancelButtonColor: '#d33',
+confirmButtonText: 'Yes, Accept it!'
+}).then((result) => {
+  if (result.isConfirmed) {
 
+    let orderId=e.target.dataset.id;
+    let orderData=AllPersonsData.find(el=>el.id==`${orderId}`);
 
-  e.target.parentNode.parentNode.parentNode.remove();
-  
+    setDoc(doc(db,"Persons",orderId),{
+      ...orderData,
+      isAccepted: true,
+    });
+
+    e.target.parentNode.parentNode.parentNode.remove();
+
+    Swal.fire(
+      'Accepted!',
+      'Your Order has been Accepted.',
+      'success'
+    );
+
+  }
+})
+
 };
 /* end accept order */
 
 
+
+
+
 /* start archive order */
 if([...e.target.classList].includes("archiveOrder")){
-  let orderId=e.target.dataset.id;
-  let orderData=AllPersonsData.find(el=>el.id==`${orderId}`);
 
-  setDoc(doc(db,"Persons",orderId),{
-    ...orderData,
-    isAccepted: false,
-  });
+  Swal.fire({
+  title: 'Are you Want To Archive It?',
+  text: "",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, Archive it!'
+  }).then((result) => {
+    if (result.isConfirmed) {
 
-  e.target.parentNode.parentNode.parentNode.remove();
+      let orderId=e.target.dataset.id;
+      let orderData=AllPersonsData.find(el=>el.id==`${orderId}`);
+
+      setDoc(doc(db,"Persons",orderId),{
+        ...orderData,
+        isAccepted: false,
+      });
+
+      e.target.parentNode.parentNode.parentNode.remove();
+
+      Swal.fire(
+        'Archived!',
+        'Your Order has been Archived.',
+        'success'
+      );
+
+    }
+  })
 
 };
 /* end archive order */
 
 
+
+
+
+
+/* start remove order */
+if([...e.target.classList].includes("removeOrder")){
+
+
+  Swal.fire({
+  title: 'Are you want to delet it?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, delete it!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+
+      let orderId=e.target.dataset.id;
+      let orderData=AllPersonsData.find(el=>el.id==`${orderId}`);
+
+      let orderDoc=doc(db, "Persons", orderId);
+
+      deleteDoc(orderDoc);
+
+      e.target.parentNode.parentNode.parentNode.remove();
+
+      Swal.fire(
+        'Deleted!',
+        'Your order has been deleted.',
+        'success'
+      );
+
+    }
+  })
+
+
+};
+/* end remove order */
+
+
+
+
+/* start edit order */
+
+
+if([...e.target.classList].includes("editOrder")){
+
+  let orderId=e.target.dataset.id;
+  let orderData=AllPersonsData.find(el=>el.id==`${orderId}`);
+
+  swool(orderData);
+
+};
+
+
+
+
+
+function swool(orderData){
+
+  
+  Swal.fire({
+      title: 'قم بتعديل البيانات التالية',
+      html: `
+      
+      
+      <div class="mainForm" style="overflow-y: hidden; overflow-c: scroll; font-size: 17px!important; font-family: 'Cairo', sans-serif; font-weight: bold!important;">
+
+          <label for="name">:الاسم</label>
+          <input style="width: 98%;" type="text" dir="auto" autocomplete="off" id="name" value="${orderData.name}">
+
+          <label for="phone">رقم الجوال:</label>
+          <input style="width: 98%;" type="number" placeholder="" dir="auto" autocomplete="off" id="phone" value="${orderData.phone}">
+
+          <label for="active">النشاط:</label>
+          <select value="" dir="auto" id="active" name="carlist" form="carform" style="font-weiht: bold; padding: 5px 5px; width: 98%; margin: auto 10px auto 0px; border: 2px solid black; border-radius: 6px;">
+              <option value="${orderData.active}">${orderData.active}</option>
+              <option value="تسويق الكتروني">
+              تسويق الكتروني
+              </option>
+              <option value="تصميم موقع الكترونية">
+              تصميم موقع الكترونية
+              </option>
+              <option value="تصميم متجر الكترونية">
+              تصميم متجر الكترونية
+              </option>
+              <option value="تصميم متجر علي منصة سلة">
+              تصميم متجر علي منصة سلة
+              </option>
+              <option value="تصميم متجر علي منصة زيد">
+              تصميم متجر علي منصة زيد
+              </option>
+              <option value="ربط خدامات">
+              ربط خدامات
+              </option>
+              <option value="نقاط بيع">
+              نقاط بيع
+              </option>
+              <option value="صيانة متجر سلة">
+              صيانة متجر سلة
+              </option>
+              <option value="تصميم منيو مطعم الكتروني">
+              تصميم منيو مطعم الكتروني
+              </option>
+              <option value="برامج محاسبية متاكملة">
+              برامج محاسبية متاكملة
+              </option>
+              <option value="برامج معامل تحاليل طبية">
+              برامج معامل تحاليل طبية
+              </option>
+              <option value="برامج مستوصفات طبية">
+              برامج مستوصفات طبية
+              </option>
+              <option value="audi">
+              شي اخر..
+              </option>
+          </select>
+
+          <label for="city">المدينة:</label>
+          <input style="width: 98%;" type="text" dir="rtl" autocomplete="off" id="city" value="${orderData.city}">
+
+          <label for="price">المبلغ:</label>
+          <input style="width: 98%;" type="text" dir="rtl" autocomplete="off" id="price" value="${(orderData.price==undefined)?0:orderData.price}">
+
+          <label for="startTime">بداية العقد:</label>
+          <input style="width: 98%;" type="date" dir="rtl" autocomplete="off" id="startTime" value="${(orderData.startTime==undefined)?0:orderData.startTime}">
+
+          <label for="endTime">نهاية العقد </label>
+          <input style="width: 98%;" type="date" dir="rtl" autocomplete="off" id="endTime" value="${(orderData.endTime==undefined)?0:orderData.endTime}">
+
+      </div>
+      
+      
+      `,
+      confirmButtonText: 'حفظ',
+  }).then((result) => {    
+      if (result.isConfirmed) {
+
+          let name=document.querySelector("#name").value;
+          let phone=document.querySelector("#phone").value;
+          let active=document.querySelector("#active").value;
+          let city=document.querySelector("#city").value;
+          let price=document.querySelector("#price").value;
+          let startTime=document.querySelector("#startTime").value;
+          let endTime=document.querySelector("#endTime").value;
+
+
+
+          SetData(name,phone,active,city,price,startTime,endTime);
+
+          function SetData(name,phone,active,city,price,startTime,endTime){
+            setDoc(doc(db,"Persons",orderData.id), {
+              name: name,
+              phone: phone,
+              city: city,
+              active: active,
+              price: price,
+              startTime: startTime,
+              endTime: endTime,
+              id: orderData.id,
+              country_calling_code: orderData.country_calling_code,
+              date: orderData.date,
+              isAccepted: (orderData.isAccepted==undefined)?'':orderData.isAccepted,
+              orderDate: orderData.orderDate,
+            }).then(e=>{history.go(0);})
+
+            
+
+
+          };
+
+
+          // if((name).trim()!==""&&(phone).trim()!==""&&(active).trim()!==""&&(city).trim()!==""){
+          //     SetData(name,phone,active,city);
+          //     Swal.fire('تم الارسال سنقوم بالتواصل معك ', '', 'success').then((e)=>{
+          //         window.close();
+          //     });
+          // }else {
+          //     Swal.fire({
+          //         icon: 'error',
+          //         title: 'Oops...',
+          //         text: 'برجاء كتابة البيانات بشكل صحيح',
+          //     }).then((x)=>{
+          //         swool();
+          //     });
+          // }
+
+
+          
+          
+      };
+  });
+
+};
+
+
+
+/* end edit order */
+
+
+
 };
 
 /* 4 end set Orders Accepted and orders archived*/
+
+
+
+
+
+
+
+const colRef= collection(db,"Persons");
+
+
+onSnapshot(colRef,async ()=>{
+  await setIdForAllOrders();
+  getAllNewOrders();
+});
+
 
 
 
